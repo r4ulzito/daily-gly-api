@@ -28,7 +28,8 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    private Integer target_gly;
+    @Builder.Default
+    private Integer target_gly = 200;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "tb_user_register", joinColumns = {

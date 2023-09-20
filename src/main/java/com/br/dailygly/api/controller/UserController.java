@@ -1,8 +1,10 @@
 package com.br.dailygly.api.controller;
 
-import com.br.dailygly.api.model.User;
-import com.br.dailygly.api.repository.UserRespository;
+import com.br.dailygly.api.dto.userDto.UserLoginDTO;
+import com.br.dailygly.api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-    @PostMapping
-    public ResponseEntity createUser() {
-        return ResponseEntity.ok().build();
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
+    @PostMapping("/login")
+    public ResponseEntity userLogin(@Valid @RequestBody UserLoginDTO data) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(this.userService.userLogin(data.userToken()));
+
+    }
+
 }
