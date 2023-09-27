@@ -1,13 +1,17 @@
 package com.br.dailygly.api.model;
 
+import com.br.dailygly.api.dto.register.GetDayRegisterDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -21,12 +25,13 @@ public class MonthRegister {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user_id;
 
     @Column(nullable = false)
-    private String year;
+    private Integer year;
 
     @Column(nullable = false)
     private Integer month;
@@ -55,4 +60,24 @@ public class MonthRegister {
     public int hashCode() {
         return Objects.hash(getId(), getUser_id(), getYear(), getMonth(), getDays());
     }
+
+    public void addDayRegister(DayRegister newDayRegister) {
+        this.days.add(newDayRegister);
+    }
+
+    public DayRegister findDayRegister(int targetDay) {
+
+        return this.days.stream().filter(rd ->
+                        rd.getDay().equals(targetDay))
+                .findAny().orElseThrow(() -> new RuntimeException("Failed to find day register"));
+
+    }
+
+    public List<GetDayRegisterDTO> findAllDayRegistersByMonth(int targetMonth) {
+        return this.days.stream()
+                .filter(dayRegister -> dayRegister.getMonth().getMonth() == targetMonth)
+                .toList().stream().map(GetDayRegisterDTO::new).sorted(Comparator.comparing(GetDayRegisterDTO::day)
+                ).collect(Collectors.toList());
+    }
+
 }

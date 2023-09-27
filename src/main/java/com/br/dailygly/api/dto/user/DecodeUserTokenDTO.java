@@ -1,4 +1,4 @@
-package com.br.dailygly.api.dto.userDto;
+package com.br.dailygly.api.dto.user;
 
 public record DecodeUserTokenDTO(
 

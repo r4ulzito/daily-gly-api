@@ -53,4 +53,15 @@ public class User {
     public int hashCode() {
         return Objects.hash(getId(), getUid_google(), getName(), getTarget_gly(), getRegisters());
     }
+
+    public void addMonthRegister(MonthRegister newMonthRegister) {
+        this.registers.add(newMonthRegister);
+    }
+
+    public MonthRegister findMonthRegister(int targetYear, int targetMonth) {
+
+        return this.registers.stream().filter(r -> r.getYear().equals(targetYear) &&
+                r.getMonth().equals(targetMonth)).findAny().orElse(null);
+    }
+
 }
