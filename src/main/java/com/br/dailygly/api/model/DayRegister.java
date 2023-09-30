@@ -1,10 +1,12 @@
 package com.br.dailygly.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.Objects;
 
@@ -20,7 +22,8 @@ public class DayRegister {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "month_register_id")
     private MonthRegister month;
 
@@ -28,28 +31,36 @@ public class DayRegister {
     private Integer day;
 
     @Column
-    private Integer before_breakfast;
+    @Builder.Default()
+    private Integer before_breakfast = 0;
 
-    @Column()
-    private Integer after_breakfast;
+    @Column
+    @Builder.Default()
+    private Integer after_breakfast = 0;
 
-    @Column()
-    private Integer before_lunch;
+    @Column
+    @Builder.Default()
+    private Integer before_lunch = 0;
 
-    @Column()
-    private Integer after_lunch;
+    @Column
+    @Builder.Default()
+    private Integer after_lunch = 0;
 
-    @Column()
-    private Integer before_dinner;
+    @Column
+    @Builder.Default()
+    private Integer before_dinner = 0;
 
-    @Column()
-    private Integer after_dinner;
+    @Column
+    @Builder.Default()
+    private Integer after_dinner = 0;
 
-    @Column()
-    private Integer before_sleep;
+    @Column
+    @Builder.Default()
+    private Integer before_sleep = 0;
 
-    @Column()
-    private String observation;
+    @Column
+    @Builder.Default()
+    private String observation = "";
 
     public void setMonth(MonthRegister month) {
         this.month = month;
@@ -87,4 +98,40 @@ public class DayRegister {
                 getBefore_sleep(),
                 getObservation());
     }
+
+    public void setPeriodValue(String period, Integer value) {
+
+        if (value == null) {
+            throw new RuntimeException("Period value cannot be null");
+        }
+
+        if (period.equals("OBSERVACAO")) {
+            throw new RuntimeException("The selected period cannot be a number");
+        } else {
+            switch (period) {
+                case "PRE_CAFE" -> this.before_breakfast = value;
+                case "POS_CAFE" -> this.after_breakfast = value;
+                case "PRE_ALMOCO" -> this.before_lunch = value;
+                case "POS_ALMOCO" -> this.after_lunch = value;
+                case "PRE_JANTAR" -> this.before_dinner = value;
+                case "POS_JANTAR" -> this.after_dinner = value;
+                case "ANTES_DORMIR" -> this.before_sleep = value;
+            }
+        }
+
+    }
+
+    public void setPeriodValue(String period, String value) {
+
+        if (value == null || value.equals("")) {
+            throw new RuntimeException("Observation value cannot be empty");
+        }
+
+        if (period.equals("OBSERVACAO")) {
+            this.observation = value;
+        } else {
+            throw new RuntimeException("The selected period cannot be a string");
+        }
+    }
+
 }

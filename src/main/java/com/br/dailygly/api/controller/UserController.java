@@ -1,6 +1,6 @@
 package com.br.dailygly.api.controller;
 
-import com.br.dailygly.api.dto.userDto.GetUserDTO;
+import com.br.dailygly.api.dto.user.GetUserDTO;
 import com.br.dailygly.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

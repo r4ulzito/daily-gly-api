@@ -1,4 +1,4 @@
-package com.br.dailygly.api.dto.userDto;
+package com.br.dailygly.api.dto.user;
 
 import com.br.dailygly.api.model.User;
 

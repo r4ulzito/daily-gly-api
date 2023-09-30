@@ -1,7 +1,7 @@
 package com.br.dailygly.api.service.impl;
 
-import com.br.dailygly.api.dto.userDto.DecodeUserTokenDTO;
-import com.br.dailygly.api.dto.userDto.GetUserDTO;
+import com.br.dailygly.api.dto.user.DecodeUserTokenDTO;
+import com.br.dailygly.api.dto.user.GetUserDTO;
 import com.br.dailygly.api.exception.InvalidTokenException;
 import com.br.dailygly.api.model.User;
 import com.br.dailygly.api.repository.UserRespository;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 import java.util.Base64;
 
 @Service
-public class UserServiceImplements implements UserService {
+public class UserServiceImplement implements UserService {
 
     private final UserRespository userRespository;
 
     @Autowired
-    public UserServiceImplements(UserRespository userRespository) {
+    public UserServiceImplement(UserRespository userRespository) {
         this.userRespository = userRespository;
     }
 
