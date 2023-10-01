@@ -23,7 +23,7 @@ public record SetRegisterDTO(
         @Max(value = 600, message = "Value must be less than 600")
         Integer gly_value,
 
-        @Size(max = 14)
+        @Size(max = 23)
         String observation
 
 ) {
