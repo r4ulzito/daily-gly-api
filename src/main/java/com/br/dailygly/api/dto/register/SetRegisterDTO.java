@@ -19,7 +19,7 @@ public record SetRegisterDTO(
         @NotNull(message = "Period is required")
         RegisterPeriod period,
 
-        @Min(value = 1, message = "Value must be greater than 0")
+        @Min(value = 0, message = "Value must be greater or equal than 0")
         @Max(value = 600, message = "Value must be less than 600")
         Integer gly_value,
 
