@@ -29,8 +29,6 @@ public class UserServiceImplement implements UserService {
 
             String payload = new String(jwtDecoder.decode(userJwtToken));
 
-            System.out.println(payload);
-
             String name = JsonPath.read(payload, "$.name");
             String uid_google = JsonPath.read(payload, "$.user_id");
 

@@ -13,7 +13,9 @@ public class HealthController {
     @GetMapping
     public ResponseEntity healthCheck() {
 
-        return ResponseEntity.status(HttpStatus.OK).body("Service on live!");
+        System.out.println("Service in health");
+
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 
 }
